@@ -59,6 +59,21 @@ class TestImageLinkSplitter(unittest.TestCase):
                     "link", TextType.LINK, "https://example.com"
                 ),],new_nodes,)
 
+    def test_split_link_only_text(self):
+        node = TextNode("This only has text", TextType.TEXT)
+        new_nodes = split_nodes_link([node])
+        self.assertEqual([TextNode("This only has text", TextType.TEXT)], new_nodes)
+
+    def test_split_link_only_link(self):
+        node = TextNode("[This only has link text](/example)", TextType.TEXT)
+        new_nodes = split_nodes_link([node])
+        self.assertEqual([TextNode("This only has link text", TextType.LINK, "/example")], new_nodes)
+
+    def test_split_link_adjacent_links(self):
+        node = TextNode("[one](a)[two](b)", TextType.TEXT)
+        new_nodes = split_nodes_link([node])
+        self.assertEqual([TextNode("one", TextType.LINK, "a"),TextNode("two", TextType.LINK, "b"),], new_nodes)
+
     def test_split_image_not_link(self):
         node = TextNode(
             "This is text with an ![image](https://i.imgur.com/example.png) and another [link](https://example.com)",

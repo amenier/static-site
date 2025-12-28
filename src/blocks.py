@@ -23,21 +23,22 @@ class BlockType(Enum):
     P = "text"
 
 def block_to_block_type(block):
-    
+    lines = block.split("\n")
+
     if re.match(r"^(#){1,6} ", block):
         return BlockType.HEADING
-    if re.match(r"^`{3}.*`{3}$", block):
+    if re.match(r"^`{3}.*`{3}$", block): # Code detection could use more work on edges and formats
+        return BlockType.CODE
+    if len(lines) > 1 and re.match(r"^`{3}", lines[0]) and re.match(r"`{3}", lines[-1]):
         return BlockType.CODE
     if re.match(r"^>", block):
         return BlockType.QUOTE
     if re.match(r"^- ", block):
-        lines = block.split("\n")
         for line in lines:
             if not re.match(r"^- ", line):
                 return BlockType.P
         return BlockType.UL
     if re.match(r"^1. ", block):
-            lines = block.split("\n")
             i = 1
             for line in lines:
                 if not re.match(rf"^{i}. ", line):

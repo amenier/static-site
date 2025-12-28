@@ -142,7 +142,7 @@ class TestBlockTypeCheckerCODE(unittest.TestCase):
         self.assertEqual(result, BlockType.CODE)
 
     def test_code_multiline(self):
-        block = "```code \n\n\nblock```"
+        block = "```\ncode \n\n\nblock\n```"
         result = block_to_block_type(block)
         self.assertEqual(result, BlockType.CODE)
 

@@ -15,5 +15,5 @@ class ParentNode(HTMLNode):
         return f"<{self.tag}{self.props_to_html()}>{children_string}</{self.tag}>"
 
     def __repr__(self):
-        return f"LeafNode({self.tag}, {self.value}, {self.props})"
+        return f"ParentNode({self.tag}, {self.children}, {self.props})"
 

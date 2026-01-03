@@ -26,6 +26,20 @@ def code_block_to_node(code_block):
     code_text_node = text_node_to_html_node(TextNode(code,TextType.TEXT))
     return ParentNode("pre", [ParentNode("code",[code_text_node])])
 
+def quote_block_to_node(quote_block):
+    quote_text = quote_block[1:]
+    children = text_to_children(quote_text)
+    return ParentNode("quoteblock", children)
+
+def heading_block_to_node(heading_block):
+    hash_count = 0
+    while heading_block[hash_count] == "#":
+        hash_count += 1
+    heading_text = heading_block.strip("#").strip()
+    children = text_to_children(heading_text)
+    return ParentNode(f"h{hash_count}", children)
+
+
 
 def markdown_to_html_node(markdown):
     blocks = markdown_to_blocks(markdown)
@@ -41,6 +55,10 @@ def markdown_to_html_node(markdown):
             node_list.append(code_block_to_node(block))
         elif block_type == BlockType.P:
             node_list.append(p_block_to_node(block))
+        elif block_type == BlockType.QUOTE:
+            node_list.append(quote_block_to_node(block))
+        elif block_type == BlockType.HEADING:
+            node_list.append(heading_block_to_node(block))
     return ParentNode("div", node_list)
     #turn the blocks into parent nodes
     # each block type will have a helper function

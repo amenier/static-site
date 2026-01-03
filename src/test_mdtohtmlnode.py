@@ -36,5 +36,50 @@ the **same** even with inline stuff
             "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>",
         )
 
+
+    def test_quoteblock(self):
+        md = """
+This is normal text.
+
+
+>This is a quote.
+
+"""
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><p>This is normal text.</p><quoteblock>This is a quote.</quoteblock></div>"
+
+        )
+
+
+
+    def test_headings(self):
+        md = """
+# h1
+
+## h2
+
+### h3
+
+#### h4
+
+##### h5
+
+###### h6
+
+
+"""
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><h1>h1</h1><h2>h2</h2><h3>h3</h3><h4>h4</h4><h5>h5</h5><h6>h6</h6></div>"
+
+        )        
+
+
+
 if __name__ == "__main__":
     unittest.main()

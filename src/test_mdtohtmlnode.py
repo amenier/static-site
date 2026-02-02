@@ -79,6 +79,46 @@ This is normal text.
 
         )        
 
+    def test_ul(self):
+        md = """
+- first unordered item
+- second unordered item
+"""
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><ul><li>first unordered item</li><li>second unordered item</li></ul></div>"
+        )        
+
+    def test_ol(self):
+        md = """
+1. first item
+2. second **item**
+"""
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><ol><li>first item</li><li>second <b>item</b></li></ol></div>"
+        )
+
+    def test_multiple_blocks(self):
+        md = """
+# Here is some heading
+
+This _is_ a **paragraph**
+
+- unordered
+- `list`
+"""
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><h1>Here is some heading</h1><p>This <i>is</i> a <b>paragraph</b></p><ul><li>unordered</li><li><code>list</code></li></ul></div>"
+        )
+
 
 
 if __name__ == "__main__":

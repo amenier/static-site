@@ -26,9 +26,9 @@ class BlockType(Enum):
     P = "text"
 
 def block_to_block_type(block):
-    print("MY B2BT CALLED WITH:", repr(block[:20])) #debug
+    #print("MY B2BT CALLED WITH:", repr(block[:20])) #debug
     lines = block.split("\n") 
-    print("MY B2BT LINES:", [repr(l) for l in lines]) #debug
+    #print("MY B2BT LINES:", [repr(l) for l in lines]) #debug
 
     if re.match(r"^(#){1,6} ", block):
         return BlockType.HEADING

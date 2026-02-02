@@ -39,6 +39,24 @@ def heading_block_to_node(heading_block):
     children = text_to_children(heading_text)
     return ParentNode(f"h{hash_count}", children)
 
+def ul_block_to_node(ul_block):
+    lines = ul_block.split("\n")
+    lines = [line[2:] for line in lines]    
+    list_items_nodes = []
+    for stripped_line in lines:
+        children = text_to_children(stripped_line)
+        list_items_nodes.append(ParentNode("li", children))
+    return ParentNode("ul", list_items_nodes)
+    
+def ol_block_to_node(ol_block):
+    lines = ol_block.split("\n")
+    lines = [line.partition(". ")[2] for line in lines]    
+    #change to string off numbers x.
+    list_items_nodes = []
+    for stripped_line in lines:
+        children = text_to_children(stripped_line)
+        list_items_nodes.append(ParentNode("li", children))
+    return ParentNode("ol", list_items_nodes)    
 
 
 def markdown_to_html_node(markdown):
@@ -59,6 +77,10 @@ def markdown_to_html_node(markdown):
             node_list.append(quote_block_to_node(block))
         elif block_type == BlockType.HEADING:
             node_list.append(heading_block_to_node(block))
+        elif block_type == BlockType.UL:
+            node_list.append(ul_block_to_node(block))
+        elif block_type == BlockType.OL:
+            node_list.append(ol_block_to_node(block))
     return ParentNode("div", node_list)
     #turn the blocks into parent nodes
     # each block type will have a helper function

@@ -38,8 +38,9 @@ def generate_page(from_path, template_path, dest_path):
         os.makedirs(os.path.dirname(dest_path))
     
     with open(dest_path,"w") as h:
-        template_lines = template.split("\n")
-        for line in template_lines:
-            h.write(line)
+        # template_lines = template.split("\n")
+        # for line in template_lines:
+        #     h.write(line)
+        h.write(template)
         h.close()
     

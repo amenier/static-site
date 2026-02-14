@@ -27,9 +27,13 @@ def code_block_to_node(code_block):
     return ParentNode("pre", [ParentNode("code",[code_text_node])])
 
 def quote_block_to_node(quote_block):
-    quote_text = quote_block[1:]
+    quote_lines = quote_block.split("\n")
+    cleaned_quote_lines = []
+    for line in quote_lines:
+        cleaned_quote_lines.append(line.strip("> "))
+    quote_text = "".join(cleaned_quote_lines)
     children = text_to_children(quote_text)
-    return ParentNode("quoteblock", children)
+    return ParentNode("blockquote", children)
 
 def heading_block_to_node(heading_block):
     hash_count = 0

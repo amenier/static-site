@@ -4,6 +4,7 @@ import os
 from logging_config import setup_logging
 setup_logging()
 from copy_static import copy_static_to_public
+from generate_page import generate_page
 
 def main():
     logger = logging.getLogger(__name__)
@@ -15,6 +16,9 @@ def main():
         logger.debug("no public directory to remove")
     os.mkdir("./public")
     copy_static_to_public("./static", "./public")
+    logger.debug("files copied")
+    generate_page("./content/index.md","template.html","./public/index.html")
+
 
 if __name__ == "__main__":
     main()

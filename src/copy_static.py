@@ -3,7 +3,7 @@ import shutil
 import logging
 
 
-def copy_static_to_public(src, dest):
+def copy_static_to_docs(src, dest):
     logger = logging.getLogger(__name__)
     logger.debug("checking for destination")
     if not os.path.exists(dest):
@@ -17,7 +17,7 @@ def copy_static_to_public(src, dest):
             shutil.copy(os.path.join(src, item), os.path.join(dest, item))
         else:
             os.mkdir(os.path.join(dest, item))
-            copy_static_to_public(os.path.join(src, item), os.path.join(dest, item))
+            copy_static_to_docs(os.path.join(src, item), os.path.join(dest, item))
 
 
 

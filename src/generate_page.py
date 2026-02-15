@@ -12,7 +12,7 @@ def extract_title(markdown):
                 return line[2:].strip()
         raise ValueError("missing title")
     
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, basepath = "/"):
     logger.info(f"Generating page from {from_path} to {dest_path} using {template_path}")
     
     with open(from_path,"r") as f:
@@ -31,7 +31,7 @@ def generate_page(from_path, template_path, dest_path):
     title = extract_title(from_path)
 
     logger.info("Replacing content")
-    template = template.replace("{{ Title }}", title).replace("{{ Content }}", html)
+    template = template.replace("{{ Title }}", title).replace("{{ Content }}", html).replace('href="/', f'href="{basepath}').replace('src="/', f'src="{basepath}')
     logger.debug(template)
 
     if not os.path.exists(os.path.dirname(dest_path)):
@@ -44,7 +44,7 @@ def generate_page(from_path, template_path, dest_path):
         h.write(template)
         h.close()
     
-def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, basepath = "/"):
     logger.debug("starting recursive page generation")
     # source_dir = os.path.dirname(dir_path_content)
     # dest_dir = os.path.dirname(dest_dir_path)

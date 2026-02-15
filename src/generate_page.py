@@ -56,6 +56,6 @@ def generate_pages_recursive(dir_path_content, template_path, dest_dir_path, bas
         logger.debug(f"attempting to copy {item}")
         if os.path.isfile(os.path.join(dir_path_content, item)):
             logger.debug(f" current item is {os.path.join(dir_path_content, item)}")
-            generate_page(os.path.join(dir_path_content, item), template_path, os.path.join(dest_dir_path, item).replace(".md",".html"))
+            generate_page(os.path.join(dir_path_content, item), template_path, os.path.join(dest_dir_path, item).replace(".md",".html"), basepath)
         else:
             generate_pages_recursive(os.path.join(dir_path_content, item), template_path, os.path.join(dest_dir_path, item))
